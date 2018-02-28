@@ -1,0 +1,119 @@
+---
+title: "Best of a bad bunch"
+author: "Nick Waters"
+date: "27/2/2018"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+```
+## The premise
+Each year for th eNUIG Postgrad Ball, we need to provide wine.  We are but poor students, and have no sommoleir for the department.  So, we set out to find the best wine in Galway in February 2018.  The best wine for under 7 euro, that is. 
+
+## The Study
+We recruited 15 volunteers, including yours truly.  As such, this is a single-blind study.  We covered the label of the wines with blank paper, removed corks to prevent the cork-vs-screecap bias, and labeled the bottles W[1-8] or R[1-6], as needed.  Samples were poured mostly in order of the bottle number, but some variation was introduced due to the u,ber of people, number of bottles, and overeager tasters.  A vase for exess wine was provided to prevent the pressure to finish ones glass.  Approximately 10-20 ml were provided in either a wine or chamapgne glass (due to availability).  PArticipants were instructed to not characteristics of the wine and rate  on a scale from 1 to ten.
+
+## the data
+Lets read in the data.
+```{r read_in_data}
+data <- read.csv(file = "data/responses.csv", sep="\t")
+str(data)
+#lets add a colum for color
+data$color <- as.factor(ifelse(grepl("r", data$wine), "red", "white"))
+data <- data
+summary(data)
+```
+
+And lets plot those values.
+```{r prelim}
+ggplot(data, aes(x=wine, y=rating, fill=color)) + 
+  geom_boxplot() + 
+  geom_jitter(alpha=.5, height = .1, width = .1) 
+```
+
+So, we have some issues right away.  You notice that some people answered in mixed numbers, and there is a good bit of missing data. Some of that looks like complete sets (a person who did not score any reds or any whites), and sometimes it looks like they just didnt give a number for the ones they didnt like.  Becasue we have the dasting notes, lets go through and replace the missing values with 1's for the wines with missing values but having a negative commented (ie, "nope", "gross", etc).  While we're at it, lets give missing values of something neutral, 5, for those with neutral comments ("nice", "yes", etc).
+```{r}
+table(is.na(data$rating))
+data$rating <- ifelse(is.na(data$rating) & grepl("no|nah|not.*good", data$notes), 0, data$rating)
+data$rating <- ifelse(is.na(data$rating) & grepl(".+", data$notes), 5, data$rating)
+table(is.na(data$rating))
+```
+That got rid of 9 NA's with sensible values, so im happy about that.  Now, lets take a look at our repsonses by person; we dot want someone who is giving out all 10s, etc.  Are there any strange people that we should be aware of?
+
+```{r people}
+
+ggplot(data, aes(x=color, y=rating, fill=color)) + 
+  geom_boxplot() + facet_wrap(~person) +
+  geom_jitter(alpha=.5, height = .05, width = .15) 
+```
+We have a few interesting things here.  Some people (3,4,12) seem to have a clear preference for red over white; others (2,10, maybe 9) prefer whites.
+
+It looks like #5 didnt rate any of the red wines. But, they have a decent spread for the whites, so there should be no harm in including them.
+
+On the other hand, person #15 doesnt seem to have reported anyhting for the whites, but also had few responses.
+
+```{r}
+print(data[data$person == 15,])
+```
+while they have funny comments, ignoring all but three of the wines is hardly helpful.  Do they love the ones they didnt rate? did they hate them and give up? Who knows.  Further, their ratings only range from3 to 4.  hardly helpful.  Lets remove them from the analysis.
+
+```{r}
+data <- data[data$person != 15, ]
+```
+
+On closer inspection, you'll find there are 15 participants for the white wine, and 14 for the red. Further, the range should go from 1 to ten, but it instead goes from zero to 9.  Luckily, we tried (no promises) to ensure that person 1 was the same for both the reds and the whites. Lets try to normalize a scale from 0:10 based on their mean and max ratings.
+
+```{r normalized}
+data <- data %>% 
+  group_by(person) %>%
+  mutate(scaled_rating = (rating - min(rating))/(max(rating) - min(rating)) * 10) %>%
+  as.data.frame()
+
+ggplot(data, aes(x=wine, y=scaled_rating, fill=color)) + 
+  geom_boxplot() + 
+  geom_jitter(alpha=.5, height = .1, width = .1) 
+```
+Thats interesting; the values do shift around a bit.  The variances are wider, so the responses are starting to look a bit more similar.
+
+We should note that we did the white wine tasting first, and then proceeded on to the reds.  That, combined with the fact that most people (myself included) prefer either red or white, makes me think that we should separtate both by person and by color of the wine.  Its not really fair to compare a (gross) dessert white to a (tasty) shiraz, after all...
+
+
+```{r normalized_by_color_and_perosn}
+data <- data %>% 
+  group_by(person, color) %>%
+  mutate(scaled_rating_color = (rating - min(rating))/(max(rating) - min(rating)) * 10) %>%
+  as.data.frame()
+
+ggplot(data, aes(x=wine, y=scaled_rating_color, fill=color)) + 
+  geom_boxplot() + 
+  geom_jitter(alpha=.5, height = .05, width = .15) 
+```
+
+Ok, so should we buy r1  and w1, then?
+
+Lets look at what would happe if we generated random data of a similar experiment: 8 white and 8 red wines, 10 people, cheese and crackers.
+```{r}
+set.seed(27)
+colors = 2
+n = 10
+wines = 8
+null_data <- data.frame(person=sort(rep(1:n, colors*wines)),
+                        wine_n=as.factor(rep(1:wines, colors * n)),
+                        color=rep(c(rep("red", wines), rep("white", wines)), n),
+                        rating=sample(0:10, n*wines*colors, replace = T))
+null_data$wine <- paste0(null_data$color, null_data$wine)
+ggplot(null_data, aes(x=wine, y=rating, fill=color)) + 
+  geom_boxplot() + 
+  geom_jitter(alpha=.5, height = .05, width = .15) 
+```
+
+Well that doesn't look much worse than our real data.
+
+
+## Which wine to buy?
+
