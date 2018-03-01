@@ -1,211 +1,211 @@
-person	wine	rating	notes
-1	w1	6	
-1	w2	0	
-1	w3	0	
-1	w4	1	
-1	w5	2	
-1	w6	3	
-1	w7	8	
-1	w8	9	
-2	w1	8	 sweet :)
-2	w2	6	seet but a bit vinegary
-2	w3	3	septic
-2	w4	3	flowers/soap/perfume
-2	w5	5	vinegar, nope
-2	w6	3	please no
-2	w7	7	smooth sweet, dessert
-2	w8	7	clean
-3	w1	7	
-3	w2	6	
-3	w3	0	
-3	w4	4	no taste
-3	w5	5	
-3	w6	3	
-3	w7	1	dessert
-3	w8	4	
-4	w1	7	sweet water
-4	w2	6	more bitter
-4	w3	3	
-4	w4	3	sickening after a while
-4	w5	5	give or take
-4	w6	6	fell like there shiuldd be a fizz
-4	w7	2	thick, too sweet
-4	w8	7	light, like!
-5	w1	7	
-5	w2	3	
-5	w3		
-5	w4	4	shite
-5	w5	8	
-5	w6		no
-5	w7		nah
-5	w8	7	nice, but plain?
-6	w1	7	
-6	w2	2	
-6	w3	4	
-6	w4	5	
-6	w5	5	
-6	w6	6	
-6	w7	5	
-6	w8	6	
-7	w1	1	
-7	w2	2	
-7	w3	6	
-7	w4	5	
-7	w5	0	
-7	w6	3	
-7	w7		
-7	w8	7	
-8	w1	4	faint, alright, sweet
-8	w2	4	 bitter, brown tasting
-8	w3	2	piss
-8	w4	6	smells gr8, doesnt tast of wine, perfume
-8	w5	5	more brown hints, sharp
-8	w6	7	balanced taste, floral smell, sharp but clean
-8	w7	3	smells like home, v. sweet, sort of round
-8	w8	7	thin, but floral. good for binging
-9	w1	5	little bitter, some alcohol
-9	w2	4	string taste, not that much alcohol
-9	w3	4	not that good (bitter)
-9	w4	3	nope
-9	w5	2	nope nope
-9	w6		not that good, lightlight bitter (spice?)
-9	w7	7	good, sweet, not too much alcohol
-9	w8		looks like waters(little spicy)
-10	w1	3	
-10	w2	7	
-10	w3	3	
-10	w4	0	yuck
-10	w5	7	
-10	w6	6	
-10	w7	6	
-10	w8	3	
-11	w1	5	watery, not very fruity, not offensive
-11	w2	1	packing peanuts, solvent
-11	w3	5	baloons, wild grapes
-11	w4	4	floral, soap, lavender?
-11	w5	1	volitle but watery
-11	w6	5	not bad
-11	w7	0	so, so sweet
-11	w8	5	unoffending
-12	w1	2	
-12	w2	1	
-12	w3	4	
-12	w4	5	
-12	w5	2	
-12	w6	4	
-12	w7		
-12	w8	1	
-13	w1	3	no flavour, watery
-13	w2	2	
-13	w3	4	
-13	w4	5	
-13	w5	2	similar to 1
-13	w6	3	
-13	w7	7	
-13	w8	3	
-14	w1	7	fresh light
-14	w2	3	
-14	w3	5	petrol
-14	w4	2	no rating
-14	w5	7	light
-14	w6	7	good
-14	w7	0	
-14	w8		flowers light
-15	w1	3	please no
-15	w2	4	please noe
-15	w3	3	like gone off jam with socks
-15	w4		
-15	w5		
-15	w6		
-15	w7		
-15	w8		
-1	r1	2	too f*** dry, tastes like honey
-1	r2	0	lasteless
-1	r3	7	its just ok, I could do this actuall...
-1	r4	7	very similar bitter than 3, watery
-1	r5	5	too much alcohol
-1	r6	6	head heach[sic]
-2	r1	7.5	lovely
-2	r2		bit dry, nah
-2	r3	7	grand
-2	r4		bit plain, bbut nice
-2	r5		no
-2	r6		yes
-3	r1	8	shiraz
-3	r2	6	fruity
-3	r3	7	
-3	r4	5	dry dinner red
-3	r5	5	
-3	r6	7.5	merlot
-4	r1	7	nice. dru after a while
-4	r2	6	too dry
-4	r3	7	not bad
-4	r4	8	stronger than 3
-4	r5	1	no 
-4	r6	8	v easy
-5	r1		
-5	r2		
-5	r3		
-5	r4		
-5	r5		
-5	r6		
-6	r1	6	
-6	r2	4	
-6	r3	6.5	
-6	r4	7	
-6	r5	7	
-6	r6	4	
-7	r1	6	
-7	r2	4	
-7	r3	5	
-7	r4	4.5	
-7	r5	4.8	
-7	r6	4.6	
-8	r1	8	"smells interesting, but not ""good""l Minty tadte, but if cheery aftertaste"
-8	r2	4	smells like hom
-8	r3	5	christmass smell
-8	r4	0	
-8	r5	5	smells horrid. V. spicy
-8	r6	7	smells as it taste. Easy and pleasent. best in terms of mass appeal. Very drinkable
-9	r1	7	not baf, some alcohol
-9	r2	3	dry...not that good
-9	r3	2	cork and dry
-9	r4	2	olive taste
-9	r5	1	bitter
-9	r6	8	strong alcohol, soft flavor
-10	r1	5	dry nice but yucky cheap taste
-10	r2	4	not much flavout but not cheap tasting, fruity
-10	r3	1	
-10	r4	5	
-10	r5	3	
-10	r6	6	
-11	r1	7	spice. smoke
-11	r2	0	weak, ethanol
-11	r3	0	soapy
-11	r4	3	smells and tastes like shoes
-11	r5	6	semidry terrible after taste
-11	r6	6	celery, fruit
-12	r1	6	
-12	r2	2	
-12	r3	4	
-12	r4	2	
-12	r5	5	
-12	r6	4	
-13	r1	5	
-13	r2	2	yuk
-13	r3	4	
-13	r4	3	
-13	r5	6	
-13	r6	3	
-14	r1	6	dry, sharp
-14	r2	4	dry, not good
-14	r3	8	ok
-14	r4	6	ok
-14	r5	5	high alcolhol
-14	r6	6	sweet
-15	r1		
-15	r2		
-15	r3		
-15	r4		
-15	r5		
-15	r6		
+person,id,rating,notes
+1,w1,6,
+1,w2,0,
+1,w3,0,
+1,w4,1,
+1,w5,2,
+1,w6,3,
+1,w7,8,
+1,w8,9,
+2,w1,8, sweet :)
+2,w2,6,sweet but a bit vinegary
+2,w3,3,septic
+2,w4,3,flowers/soap/perfume
+2,w5,5,"vinegar, nope"
+2,w6,3,please no
+2,w7,7,"smooth sweet, dessert"
+2,w8,7,clean
+3,w1,7,
+3,w2,6,
+3,w3,0,
+3,w4,4,no taste
+3,w5,5,
+3,w6,3,
+3,w7,1,dessert
+3,w8,4,
+4,w1,7,sweet water
+4,w2,6,more bitter
+4,w3,3,
+4,w4,3,sickening after a while
+4,w5,5,give or take
+4,w6,6,feel like there should be a fizz
+4,w7,2,"thick, too sweet"
+4,w8,7,"light, like!"
+5,w1,7,
+5,w2,3,
+5,w3,,
+5,w4,4,shite
+5,w5,8,
+5,w6,,no
+5,w7,,nah
+5,w8,7,"nice, but plain?"
+6,w1,7,
+6,w2,2,
+6,w3,4,
+6,w4,5,
+6,w5,5,
+6,w6,6,
+6,w7,5,
+6,w8,6,
+7,w1,1,
+7,w2,2,
+7,w3,6,
+7,w4,5,
+7,w5,0,
+7,w6,3,
+7,w7,,
+7,w8,7,
+8,w1,4,"faint, alright, sweet"
+8,w2,4," bitter, brown tasting"
+8,w3,2,piss
+8,w4,6,"smells gr8, doesn't taste of wine, perfume"
+8,w5,5,"more brown hints, sharp"
+8,w6,7,"balanced taste, floral smell, sharp but clean"
+8,w7,3,"smells like home, v. sweet, sort of round"
+8,w8,7,"thin, but floral. good for binging"
+9,w1,5,"little bitter, some alcohol"
+9,w2,4,"string taste, not that much alcohol"
+9,w3,4,not that good (bitter)
+9,w4,3,nope
+9,w5,2,nope nope
+9,w6,,"not that good, light light bitter (spice?)"
+9,w7,7,"good, sweet, not too much alcohol"
+9,w8,,looks like waters(little spicy)
+10,w1,3,
+10,w2,7,
+10,w3,3,
+10,w4,0,yuck
+10,w5,7,
+10,w6,6,
+10,w7,6,
+10,w8,3,
+11,w1,5,"watery, not very fruity, not offensive"
+11,w2,1,"packing peanuts, solvent"
+11,w3,5,"balloons, wild grapes"
+11,w4,4,"floral, soap, lavender?"
+11,w5,1,volatile but watery
+11,w6,5,not bad
+11,w7,0,"so, so sweet"
+11,w8,5,unoffending
+12,w1,2,
+12,w2,1,
+12,w3,4,
+12,w4,5,
+12,w5,2,
+12,w6,4,
+12,w7,,
+12,w8,1,
+13,w1,3,"no flavour, watery"
+13,w2,2,
+13,w3,4,
+13,w4,5,
+13,w5,2,similar to 1
+13,w6,3,
+13,w7,7,
+13,w8,3,
+14,w1,7,fresh light
+14,w2,3,
+14,w3,5,petrol
+14,w4,2,no rating
+14,w5,7,light
+14,w6,7,good
+14,w7,0,
+14,w8,,flowers light
+15,w1,3,please no
+15,w2,4,please noe
+15,w3,3,like gone off jam with socks
+15,w4,,
+15,w5,,
+15,w6,,
+15,w7,,
+15,w8,,
+1,r1,2,"too f*** dry, tastes like honey"
+1,r2,0,tasteless
+1,r3,7,"it's just ok, I could do this actually..."
+1,r4,7,"very similar bitter than 3, watery"
+1,r5,5,too much alcohol
+1,r6,6,head heach[sic]
+2,r1,7.5,lovely
+2,r2,,"bit dry, nah"
+2,r3,7,grand
+2,r4,,"bit plain, but nice"
+2,r5,,no
+2,r6,,yes
+3,r1,8,shiraz
+3,r2,6,fruity
+3,r3,7,
+3,r4,5,dry dinner red
+3,r5,5,
+3,r6,7.5,merlot
+4,r1,7,nice. dry after a while
+4,r2,6,too dry
+4,r3,7,not bad
+4,r4,8,stronger than 3
+4,r5,1,no 
+4,r6,8,v easy
+5,r1,,
+5,r2,,
+5,r3,,
+5,r4,,
+5,r5,,
+5,r6,,
+6,r1,6,
+6,r2,4,
+6,r3,6.5,
+6,r4,7,
+6,r5,7,
+6,r6,4,
+7,r1,6,
+7,r2,4,
+7,r3,5,
+7,r4,4.5,
+7,r5,4.8,
+7,r6,4.6,
+8,r1,8,"smells interesting, but not ""good""l Minty taste, but if cherry aftertaste"
+8,r2,4,"smells like home; tannin, but bit too much. strong taste, not good"
+8,r3,5,christmas smell; cinnamon? thin taste not very interesting
+8,r4,0,
+8,r5,5,"smells horrid. V. spicy; not bad, but not easy"
+8,r6,7,smells as it taste. Easy and pleasant. best in terms of mass appeal. Very drinkable
+9,r1,7,"not bad, some alcohol"
+9,r2,3,dry...not that good
+9,r3,2,cork and dry
+9,r4,2,olive taste
+9,r5,1,bitter; horrible
+9,r6,8,"strong alcohol, soft flavor"
+10,r1,5,dry nice but yucky cheap taste
+10,r2,4,"not much flavor but not cheap tasting, fruity"
+10,r3,1,
+10,r4,5,
+10,r5,3,
+10,r6,6,
+11,r1,7,spice. smoke
+11,r2,0,"weak, ethanol"
+11,r3,0,soapy
+11,r4,3,smells and tastes like shoes
+11,r5,6,semi dry terrible after taste
+11,r6,6,"celery, fruit"
+12,r1,6,
+12,r2,2,
+12,r3,4,
+12,r4,2,
+12,r5,5,
+12,r6,4,
+13,r1,5,
+13,r2,2,yuk
+13,r3,4,
+13,r4,3,
+13,r5,6,
+13,r6,3,
+14,r1,6,"dry, sharp"
+14,r2,4,"dry, not good"
+14,r3,8,ok
+14,r4,6,ok
+14,r5,5,high alcohol
+14,r6,6,sweet
+15,r1,,
+15,r2,,
+15,r3,,
+15,r4,,
+15,r5,,
+15,r6,,

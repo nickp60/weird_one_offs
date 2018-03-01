@@ -1,15 +1,15 @@
-id	type	brand	alcohol	style	country	year	store	price	taste	internal
-r6	red	Frontera	12	Merot	chile	2016			chrries, cacao, round, good body	10
-r2	red	Montepulciano D'Abrizzo	13	montepulciano d'abruzzo 	italy	2016				7
-r1	red	Kooliburra	13.5	shiraz	australia	2017	aldi		chriiy, ripe berry fruit, black pepper, spice, soft oak, warm finisg	10
-r3	red	Cotes du rhone Villages: Cuvee Reserve	13.5	Cotes du rhone	france	2016	aldi		rasbeery blackberry spice	10
-r5	red	Cotes du rhone		Cotes du rhone	france					5
-r4	red	Valle Central chilano	13	Merlot	chile	2015			smooth tanins, plumd, cherries, cinnemon, chocolate	5
-w1	white	Conde Noble Vino Blanco	11	airen	spain	2016				1
-w8	white	Vineyards World Wines	12	Sauvignon blanc semillin	australia	2017			apple gooseberry	10
-w7	white	Premieres Cotes du Bordeaux	12.5	Cotes du Bordeaux	france		tesco		sweet, honey, dried apricots, citrus	1
-w3	white	wine of spain Chilano	11	chilano/airen	spain				apple, spice	10
-w2	white	chile	13	chardonnay	chile	2016			dry, tropical fruits, herb, citrus	10
-w6	white	Cambalala	12	Chenin Blanc	South Africa	2017			tropical fruit, zesty lime, melon, crisp green apple	10
-w5	white	Frontera	11.5	Pinot Grigio	chile	2017			pear, round, crisp finish	10
-w4	white	Azzara: wine of chile	12	white	chile				fresh, aromatic	10
+id,color,brand,name,alcohol,style,country,year,store,price,taste,internal
+r6,red,Frontera,Frontera Merot,12,Merot,chile,2016,tesco,7,"chrries, cacao, round, good body",10
+r2,red,Montepulciano D'Abrizzo,Montepulciano D'Abrizzo,13,montepulciano d'abruzzo ,italy,2016,tesco,0,,7
+r1,red,Kooliburra,Kooliburra,13.5,shiraz,australia,2017,aldi,5.49,"chriiy, ripe berry fruit, black pepper, spice, soft oak, warm finisg",10
+r3,red,Cotes du rhone Villages: Cuvee Reserve,Cotes du rhone: Reserve,13.5,Cotes du rhone,france,2016,aldi,6.29,rasbeery blackberry spice,10
+r5,red,Cotes du rhone Villages,Cotes du rhone Villages,14,Cotes du rhone,france,2015,lidl,0,,5
+r4,red,Valle Central chilano,Chilano Merlot,13,Merlot,chile,2015,obriens,7,"smooth tanins, plumd, cherries, cinnemon, chocolate",5
+w1,white,Conde Noble Vino Blanco,Conde Noble Vino Blanco,11,airen,spain,2016,lidl,0,,1
+w8,white,Vineyards World Wines Sauvignon blanc semillin,Vineyards Sauvignon blanc,12,Sauvignon blanc semillin,australia,2017,lidl,0,apple gooseberry,10
+w7,white,Premieres Cotes du Bordeaux,Cotes du Bordeaux,12.5,Cotes du Bordeaux,france,2016,tesco,0,"sweet, honey, dried apricots, citrus",1
+w3,white,wine of spain Chilano,Spain Chilano,11,chilano/airen,spain,2015,obriens,7,"apple, spice",10
+w2,white,chile,Chilean Chardonnay,13,chardonnay,chile,2016,lidl,0,"dry, tropical fruits, herb, citrus",10
+w6,white,Cambalala,Cambalala Chenin Blanc,12,Chenin Blanc,South Africa,2017,aldi,5.29,"tropical fruit, zesty lime, melon, crisp green apple",10
+w5,white,Frontera,Frontera Pinot Grigio,11.5,Pinot Grigio,chile,2017,tesco,7,"pear, round, crisp finish",10
+w4,white,Azzara: wine of chile,Azzara white,12,white,chile,,aldi,4.99,"fresh, aromatic",10
