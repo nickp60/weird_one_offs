@@ -1,0 +1,7 @@
+Bacteria	160190037
+None	6939673
+Archaea	1906417
+Eukaryota	1103185
+unclassified sequences	36760
+Viruses	26585
+other sequences	20946

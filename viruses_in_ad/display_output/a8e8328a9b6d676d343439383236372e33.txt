@@ -1,0 +1,2 @@
+Bacteria	6475
+Eukaryota	13

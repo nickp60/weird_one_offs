@@ -1,0 +1,4 @@
+Bacteria	72549348
+Archaea	1234782
+Eukaryota	369605
+Viruses	26108

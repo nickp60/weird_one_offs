@@ -1,0 +1,129 @@
+---
+title: "Detecting Viral Sequences from Shotgun Metagenomes"
+author: "Nick Waters"
+date: "8/6/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+# Intro
+We were curious how prevalent viruses are in Anaerobic Digesters.  Here is my non-rigourous attempt at getting some answers.  
+
+# The Data
+I used MG-RAST webserver to select a subset of metagenomes.  I searched for any terms containing "anaerobic digestion" and with "shotgun" in `seq_type`.  this yielded 212 metagenomes.  I downloaded the metadata, and manually created a file called `annotations.txt` that included just the mg-rast ID (which looks kinda like a checksum).
+
+# Taxonomy
+From there, I downloaded the summary statistics for the taxonomy using the (very fragile) `mg-display-statistics.py` script.
+
+```{bash  eval=FALSE}
+mkdir display_output
+while read x;
+do
+  # its written in python2.  Its 2018, and its written in python2.
+  `which python2` `which mg-display-statistics.py` --id $x --stat domain > display_output/${x}.txt ; 
+done < accessions.txt 
+```
+
+Nest, I read in the files, made a combined table from all of them:
+
+```{r get_data}
+dir <- "~/get_rast_data/display_output/"
+files <- list.files(dir)
+df <- data.frame("id"=NA, "level"=NA, "value"=NA )
+df <- df[!is.na(df), ]
+for (f in files){
+  if (file.size(file.path(dir, f)) > 0){
+     tmp <- read.csv(
+       file.path(dir, f), sep="\t",
+       header=F, col.names = c("level", "value"))
+  # tmp <- rbind(tmp, data.frame(
+  #   "level"="Total", 
+  #   "value"=sum(tmp$value)))
+     tmp$id <- f
+     df <- rbind(df, tmp)
+  }
+}
+str(df)
+```
+...adding columns with the mgrast id and for the fractional abundances.  From this we get an average viral abundance:
+```{r frac}
+df <- df %>%
+  group_by(id) %>%
+  mutate(frac = value / sum(value)) %>%
+  as_data_frame()
+str(df)
+df <- as.data.frame(df)
+str(df)
+
+
+average_viral_frac = mean(df[df$level=="Viruses", "frac"])
+```
+Our average abundance is `r average_viral_frac`.
+
+Lastly, we plot the abundances on a log scale.
+```{r plot}
+
+ggplot(df, aes(x=level, y=frac * 100, group=level)) + geom_boxplot() + scale_y_log10(breaks=c( 0.001, .01, .1, 1, 100)) + coord_flip() + 
+  geom_hline(aes(yintercept=average_viral_frac * 100,
+                 color = "green"))+
+  scale_color_discrete(guide=F)+
+  labs(subtitle = paste("Domain diversity in ",length(files), "AD metagenomes "),
+       y="Percent of Total Reads",
+       x = "")
+
+
+```
+
+
+# Rarefaction
+Next, we hope to calcalte what we can expect from a single flow cell.  Our average percentage of viral DNA is `{r average_viral_frac}`.  What are the rarefaction curves looking like for these datasets?
+
+we downloaded the data, again using the MG-RAST API.
+```{bash eval=FALSE}
+mkdir rare_output;
+while read x;
+do
+  wget -O rare_output/${x}.txt "http://api-ui.mg-rast.org/metagenome/${x}?verbosity=stats&detail=rarefaction"  
+done < accessions.txt
+```
+
+
+Each file is a list of values, so we do some data munging to read it in to something useful.
+```{r}
+target_coverage = 20
+
+raredir <- "~/get_rast_data/rare_output/"
+rarefiles <- list.files(raredir)
+f <- rarefiles[1]
+
+
+raredf <- data.frame("x"=NaN, "y"=NaN, "id"=NaN )
+raredf <- raredf[!is.na(raredf), ]
+
+for (f in rarefiles){
+  x <- readLines(file.path(raredir, f))
+  splits <- strsplit(x, "\\],\\[")[[1]]
+  # clean up first and last items
+  splits[1] <- substring(splits[1], first=3)
+  splits[length(splits)] <- substring(splits[length(splits)], first=1, last=nchar(splits[length(splits)]) - 2)
+  splitdf <- as.data.frame(splits) %>% separate(splits, into = paste("V", 1:2, sep = ","), sep = ",")
+  colnames(splitdf) <- c("x", "y")
+  splitdf$id <- f
+  raredf <- rbind(raredf, splitdf)
+}
+str(raredf)
+
+
+```
+
+Lastly, we convert values to numeric, and draw a plot:
+```{r plot_rare}
+raredf$x <- as.numeric(raredf$x)
+raredf$y <- as.numeric(raredf$y)
+ggplot(raredf, aes(x=x, y=y, group=id)) + geom_line(color="black", alpha=.1)
+```

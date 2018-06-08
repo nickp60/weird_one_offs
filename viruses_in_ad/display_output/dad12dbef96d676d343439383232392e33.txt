@@ -1,0 +1,2 @@
+Bacteria	3782
+Eukaryota	101

@@ -1,0 +1,2 @@
+Bacteria	4419
+Eukaryota	10

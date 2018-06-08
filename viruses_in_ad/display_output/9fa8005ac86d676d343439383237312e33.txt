@@ -1,0 +1,3 @@
+Bacteria	4887
+Eukaryota	47
+Archaea	9

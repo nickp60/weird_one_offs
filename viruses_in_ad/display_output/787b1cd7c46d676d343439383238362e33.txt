@@ -1,0 +1,2 @@
+Bacteria	4675
+Eukaryota	81

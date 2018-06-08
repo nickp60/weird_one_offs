@@ -1,0 +1,2 @@
+Bacteria	7762
+Eukaryota	3

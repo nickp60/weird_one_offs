@@ -1,0 +1,2 @@
+Bacteria	6231
+Eukaryota	5
