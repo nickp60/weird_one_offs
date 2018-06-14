@@ -1,0 +1,275 @@
+---
+title: "Best of a bad bunch"
+subtitle: "Analysis of 14 wines under €7"
+author: "Nick Waters"
+date: "27/2/2018"
+output: 
+  html_document:
+    keep_md: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+
+colors = c("#EF4040", "#FBFFAF", "darkgreen")
+```
+## The premise
+Each year for the NUIG Postgrad Ball, we need to provide wine.  We are but poor students, and have no sommelier for the department.  So, we set out to find the best wine in Galway in February 2018.  The best wine for under 7 euro, that is. 
+
+## The Study
+We recruited 15 volunteers, including yours truly.  As such, this is a single-blind study.  We covered the label of the wines with blank paper, removed corks to prevent the cork-vs-screw cap bias, and labeled the bottles W[1-8] or R[1-6], as needed.  Samples were poured mostly in order of the bottle number, but some variation was introduced due to the number of people, number of bottles, and overeager tasters.  A vase for excess wine was provided to prevent the pressure to finish ones glass.  Approximately 10-20 ml were provided in either a wine or champagne glass (due to availability).  Participants were instructed to not characteristics of the wine and rate  on a scale from 1 to ten.
+
+## the data
+Lets read in the data.
+```{r read_in_data}
+data <- read.csv(file = "data/responses.csv")
+str(data)
+#lets add a colum for color
+data$color <- as.factor(ifelse(grepl("r", data$id), "red", "white"))
+data <- data
+summary(data)
+```
+
+And lets plot those values.
+```{r prelim}
+ggplot(data, aes(x=id, y=rating, fill=color)) + 
+  geom_boxplot() + 
+  labs(title="Raw ratings")+
+  scale_fill_manual(values = colors, guide=F) + 
+  geom_jitter(alpha=.5, height = .1, width = .1) 
+```
+
+So, we have some issues right away.  You notice that some people answered in mixed numbers, and there is a good bit of missing data. Some of that looks like complete sets (a person who did not score any reds or any whites), and sometimes it looks like they just didn't give a number for the ones they didn't like.  Because we have the tasting notes, lets go through and replace the missing values with 1's for the wines with missing values but having a negative commented (ie, "nope", "gross", etc).  While we're at it, lets give missing values of something neutral, 5, for those with neutral comments ("nice", "yes", etc).
+```{r}
+table(is.na(data$rating))
+data$rating <- ifelse(is.na(data$rating) & grepl("no|nah|not.*good", data$notes), 0, data$rating)
+data$rating <- ifelse(is.na(data$rating) & grepl(".+", data$notes), 5, data$rating)
+table(is.na(data$rating))
+```
+
+That got rid of 9 NA's with sensible values, so I am happy about that.  Now, lets take a look at our responses by person; we dot want someone who is giving out all 10s, etc.  Are there any strange people that we should be aware of?
+
+```{r people}
+
+ggplot(data, aes(x=color, y=rating, fill=color)) +
+  scale_fill_manual(values = colors, guide=F) + 
+  labs(title="Color preference by person")+
+  geom_boxplot() + facet_wrap(~person) +
+  geom_jitter(alpha=.5, height = .05, width = .15) 
+```
+
+We have a few interesting things here.  Some people (3,4,12) seem to have a clear preference for red over white; others (2,10, maybe 9) prefer whites.
+
+It looks like #5 didn't rate any of the red wines. But, they have a decent spread for the whites, so there should be no harm in including them.
+
+On the other hand, person #15 doesn't seem to have reported anything for the whites, but also had few responses.
+
+```{r}
+print(data[data$person == 15,])
+```
+
+While they have funny comments, ignoring all but three of the wines is hardly helpful.  Do they love the ones they didn't rate? did they hate them and give up? Who knows.  Further, their ratings only range from3 to 4.  hardly helpful.  Lets remove them from the analysis.
+
+```{r}
+data <- data[data$person != 15, ]
+```
+
+On closer inspection, you'll find there are 15 participants for the white wine, and 14 for the red. Further, the range should go from 1 to ten, but it instead goes from zero to 9.  Luckily, we tried (no promises) to ensure that person 1 was the same for both the reds and the whites. Lets try to normalize a scale from 0:10 based on their mean and max ratings.
+
+```{r normalized}
+data <- data %>% 
+  group_by(person) %>%
+  mutate(scaled_rating = (rating - min(rating, na.rm = T))/(max(rating, na.rm = T) - min(rating, na.rm=T)) * 10) %>%
+  as.data.frame()
+
+ggplot(data, aes(x=id, y=scaled_rating, fill=color)) +   
+  scale_fill_manual(values = colors, guide=F) + 
+  labs(title="Rating Scaled 0:10")+
+  geom_boxplot() + 
+  geom_jitter(alpha=.5, height = .1, width = .1) 
+```
+
+That's interesting; the values do shift around a bit.  The variances are wider, so the responses are starting to look a bit more similar.
+
+We should note that we did the white wine tasting first, and then proceeded on to the reds.  That, combined with the fact that most people (myself included) prefer either red or white, makes me think that we should separate both by person and by color of the wine.  Its not really fair to compare a (gross) dessert white to a (tasty) Shiraz, after all...
+
+
+```{r normalized_by_color_and_perosn}
+data <- data %>% 
+  group_by(person, color) %>%
+  mutate(scaled_rating_color = (rating - min(rating, na.rm = T))/(max(rating, na.rm = T) - min(rating, na.rm = T)) * 10) %>%
+  as.data.frame()
+
+ggplot(data, aes(x=id, y=scaled_rating_color, fill=color)) + 
+  geom_boxplot() + 
+  labs(title="Rating Scaled 0:10 by color")+
+  scale_fill_manual(values = colors, guide=F) + 
+  geom_jitter(alpha=.5, height = .05, width = .15) 
+```
+
+OK, so should we buy r1  and w1, then?
+
+```{r}
+
+# Lets look at what would happe if we generated random data of a similar experiment: 8 white and # 8 red wines, 10 people, cheese and crackers.
+# 
+# set.seed(27)
+# colors = 2
+# n = 10
+# wines = 8
+# null_data <- data.frame(person=sort(rep(1:n, colors*wines)),
+#                         wine_n=as.factor(rep(1:wines, colors * n)),
+#                         color=rep(c(rep("red", wines), rep("white", wines)), n),
+#                         rating=sample(0:10, n*wines*colors, replace = T))
+# null_data$wine <- paste0(null_data$color, null_data$wine)
+# ggplot(null_data, aes(x=wine, y=rating, fill=color)) + 
+#   geom_boxplot() + 
+#   geom_jitter(alpha=.5, height = .05, width = .15) 
+#Well that doesn't look much worse than our real data.
+
+```
+Lets read in the metadata
+```{r}
+metadata <- read.csv("data/metadata.csv")
+full <- merge(data, metadata, by=c("id", "color"))
+full$plotname <- factor(paste0(full$name, " (",full$id,")"))
+ggplot(full, aes(x=reorder(plotname, as.numeric(id)), y=scaled_rating_color, fill=color)) + 
+  geom_boxplot() + 
+   theme_grey() +
+  geom_jitter(alpha=.5, height = .05, width = .15) + 
+  scale_fill_manual(values = colors, guide=F) + 
+  labs(title="Wine Tasting Results", subtitle="Scaled Scores (0-10); N=14", x="", y="Score", fill="Style")+
+  theme(
+    axis.text.x = element_text(angle=45, hjust = 1)
+  )
+```
+
+## Which wine to buy?
+So we have settled on the favorite wines, but what about when we factor in price?  Lets try normalizing to "quality score per euro":
+
+```{r}
+full$value_normalized <- full$scaled_rating_color / full$price
+full$value_normalized <- ifelse(is.infinite(full$value_normalized), 0, full$value_normalized)
+ggplot(full, aes(x=reorder(plotname, as.numeric(id)), y=value_normalized, fill=color)) + 
+  geom_boxplot() + 
+  theme_grey() +
+  geom_jitter(alpha=.5, height = .05, width = .15) + 
+  scale_fill_manual(values = colors, guide=F) + 
+  labs(title="Wine Value", 
+       subtitle="Score per euro; zero values indicate price not available. N=14", 
+       x="", y="Score / Euro", fill="Style")+
+  theme(
+    axis.text.x = element_text(angle=45, hjust = 1)
+  )
+```
+Its a bit hard to tell without the prices for several of them, but from what we can see, r1 is much better value than r6, which wasn't immediately apparent from the ratings.
+
+
+
+## How the wines compare with their prices?
+How well correlated are the ratings with price?
+
+```{r }
+ggplot(full[full$price !=0,], aes(x=price, y=scaled_rating_color)) +
+  geom_jitter(alpha=.5, width=.05, height=.01) +
+  geom_smooth()
+```
+It seems that there is a "sweet spot" for wines under 7 euro at around 5.6.  But who knows, the range and sample size is tiny.  Lets make a linear regression model.
+
+
+```{r}
+model1 <- lm(full[full$price != 0, "price"] ~ full[full$price != 0, "scaled_rating_color"])
+ggplot(full[full$price !=0,], aes(x=price, y=scaled_rating_color)) +
+  geom_jitter(alpha=.5, width=.05, height=.01) +
+  geom_smooth(method="lm") + 
+  labs(title="Comparing price to scaled rating")+
+  annotate("text", label=paste("r^2 =", summary(model1)$r.squared), x = 5.5, y = 2.5)
+```
+
+That may be the worst $r^2$ value I have seen.  So, no correlation between price and rating.  If anything, the more expensive the wine, the worse it gets.  
+
+
+## Who was the closest to the mean?
+It would be interesting to see who is closest to the mean (ie, who is the most representative taster).  Lets plot the votes as colors against the means of the 
+
+```{r}
+# determine the mean score for a given wine
+full <- full %>%
+  group_by(id) %>%
+  mutate(mean_normalized_rating = mean(scaled_rating_color, na.rm = T)) %>%
+  as.data.frame()
+
+# calculate how far off the mean a person was
+full <- full %>%
+  group_by(id, person) %>%
+  # - 5 because the mean  of 0-10 would be 5
+  mutate(person_diff_from_mean = scaled_rating_color - mean_normalized_rating) %>%
+  as.data.frame()
+
+# get a persons average of the difference from the means
+full <- full %>%
+  group_by(person) %>%
+  mutate(personal_mean = mean(person_diff_from_mean, na.rm = T)) %>%
+  as.data.frame()
+# get mean for red or white
+full <- full %>%
+  group_by(person, color) %>%
+  mutate(personal_mean_by_color = mean(person_diff_from_mean, na.rm = T)) %>%
+  as.data.frame()
+
+summary_data <-full %>%
+  select(person, color,  color, personal_mean,personal_mean_by_color ) %>%
+  distinct() %>%
+  as.data.frame()
+
+#How is our hivemind comparing to the mean?
+ggplot(summary_data[summary_data$color=="white",], aes(x=personal_mean)) + geom_histogram(bins = 10) +
+    labs(title="Histogram of differences from the mean", subtitle="Individual's differences from the mean rating.", x= "Difference from the Mean Rating", y="Count")
+
+
+ggplot(full, aes(x=reorder(person, personal_mean), y=person_diff_from_mean, group=person) ) +
+  geom_boxplot(color="grey30") +
+  theme_classic() +
+  geom_point(data=summary_data[summary_data$color=="red",], aes(y=personal_mean_by_color),
+             fill=colors[1],alpha=.9, size=3, shape=24) +
+  geom_point(data=summary_data[summary_data$color=="white",], aes(y=personal_mean_by_color),
+             fill=colors[2],alpha=.9, size=3, shape=24) +
+  geom_point(data=summary_data[summary_data$color=="white",], aes(y=personal_mean),
+             fill=colors[3], size=3, shape=23) +
+  geom_jitter(aes(fill=color), alpha=.4, width=.05, height=.01, size=2, shape=21) +
+  scale_fill_manual(values = colors, guide=F) + 
+  labs(title="Hivemind consensus", subtitle="Individual's differences from the mean rating. Triangles shows the \naverage difference (green is overall average).", x= "Person", y="(Scaled Rating) - (Mean Normalized Rating) ")
+
+```
+Here, we see some people (person 14) very representative of the group.  Others (person 13) mostly tend to under-rate the wine.  As can be seen from the histogram, people generally underestimate the wine.
+
+## How do we describe the best and worst wines?
+
+Some people wrote notes down about the wines.  Similarly, we have some notes from the bottles themselves.  Lets take a look.  There was nothing on the bottle for our top white (w1), but lets take a look at white 2
+
+```{r}
+print(as.character(unique(full[full$id == "w2", "taste"])))
+```
+And how did our tasters compare?
+```{r}
+print(as.character(full[full$id == "w2" & full$notes != "" , "notes"]))
+```
+Brutal.  Lets have a look at the rest:
+
+```{r}
+for (w in as.character(unique(full$id))){
+  print(w)
+  if (w == "w2"){next}
+  if (all(full[full$id ==w, "taste"] == "")){ next }
+  if (all(full[full$id ==w, "notes"] == "")){ next }
+  print(paste0("what the bottle said about ", w, ":"))
+  print(as.character(unique(full[full$id == w, "taste"])))
+  print(paste0("what we said about ", w, ":"))
+  print(paste("  ", as.character(unique(full[full$id == w, "notes"]))))
+      
+}
+```

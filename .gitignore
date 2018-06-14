@@ -1,1 +1,5 @@
 *~
+.Rproj
+.DS_store
+*.Rproj
+.Rproj.user
