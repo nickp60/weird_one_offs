@@ -1,9 +1,6 @@
 Here be dragons....
 
 
-
-This repo is for mini-analyses.
-
 ## sraFind
 I was curious how many complete genomes had publicly available data associated on the SRA.
 
@@ -22,3 +19,8 @@ Click here for a peek at the state of viral metagenome detection from anaerobic 
 We did a very informal blind taste test of 14 wines under 7 euro.
 
 [The analysis can be found here](./cheapwine/bbb.html)
+
+
+##
+
+[Here I compare 3 phage-finding tools](./testing_3_prophage_finders/README.md)
