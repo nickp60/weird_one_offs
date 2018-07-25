@@ -19,7 +19,7 @@ This was, unsurprisingly, the easiest of the tools to use.
 
 ## ProphET
 
-Next we tried [ProphET]](https://github.com/jaumlrc/ProphET). Being a non-Broadie (single tear),  I installed it into a conda env I created:
+Next we tried [ProphET](https://github.com/jaumlrc/ProphET). Being a non-Broadie (single tear),  I installed it into a conda env I created:
 
 ```
 conda create -n ProphET
@@ -67,25 +67,25 @@ conda create --name phispy python=2.7.15 biopython r-randomforests
 source activate phispy
 ```
 
-```
 Ok, so it says that it needs a certain type of annotation. Lets give it a try with a vanilla annotation 
-#+BEGIN_SRC 
+
+```
 python ~/miniconda3/envs/phispy/bin/phiSpyNov11_v2.3/genbank_to_seed.py ./BX950851.1.gb ./BX950851_seed/ 
 
 In the GenBank file, for a gene/RNA, locus_tag is missing. locus_tag is required for each gene/RNA.                                                                   
 Please make sure that each gene/RNA has locus_tag and run the program again.       
-#+END_SRC
+```
 
 It didnt work. I reannoated the genome with Prokka, and it subsequently worked.  I ran Phispy, and eventually got the following results:
 
-#+BEGIN_SRC 
+```
 CAIIPDDM_00pp.1 CAIIPDDM_1_1063490_1081325
 CAIIPDDM_02pp.2 CAIIPDDM_1_2372933_2431115
 CAIIPDDM_02pp.3 CAIIPDDM_1_2773681_2839971
 CAIIPDDM_02pp.4 CAIIPDDM_1_2929563_2964448
 CAIIPDDM_02pp.5 CAIIPDDM_1_3192250_3271834
 CAIIPDDM_03pp.6 CAIIPDDM_1_4116963_4175637
-#+END_SRC
+```
 
 Now, we have 1 that we have seen before, and 5 new ones.
 
@@ -94,6 +94,7 @@ Now, we have 1 that we have seen before, and 5 new ones.
 ## VirSorter
 
 Lastly, we tried Virsorter.  You have to download a sizable database, but they give a nice walkthrough on how to get set up on their Github page.  I'll spare you the details of running it; it was pretty pain-free. Here are the results
+
 ```
 ## 1 - Complete phage contigs - category 1 (sure)
 ## Contig_id,Nb genes contigs,Fragment,Nb genes,Category,Nb phage hallmark genes,Phage gene enrichment sig,Non-Caudovirales phage gene enrichment sig,Pfam depletion sig,Uncharacterized enrichment sig,Strand switch depletion sig,Short genes enrichment sig
@@ -113,7 +114,6 @@ VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_ge
 ## 6 - Prophages - category 3 (not so sure)
 ## Contig_id,Nb genes contigs,Fragment,Nb genes,Category,Nb phage hallmark genes,Phage gene enrichment sig,Non-Caudovirales phage gene enrichment sig,Pfam depletion sig,Uncharacterized enrichment sig,Strand switch depletion sig,Short genes enrichment sig
 VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome,4472,VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome-gene_2862-gene_2886,25,3,,,,gene_2866-gene_2886:11.02225636107671,gene_2862-gene_2886:8.40735333604608,,
-
 
 ```
 
