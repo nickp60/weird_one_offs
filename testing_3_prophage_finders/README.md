@@ -1,6 +1,6 @@
-# Testing 3 Prophage finding tools
+# Testing ~3~ 4 Prophage finding tools
 
-I was searching for the best prophage finding tool for bacterial genomics.  After a literature review and recommendations from colleagues, I decided on 3: Phispy, VirSorter, and ProphET.  I also throw in PHASTER, but as it is not open source, I decided against it.  Having code available to peer review (or in this case, to install locally) is important to me.  If the title of this post bothers you, just pretend I am using 0-indexed counting.
+I was searching for the best prophage finding tool for bacterial genomics.  After a literature review and recommendations from colleagues, I decided on 3: Phispy, VirSorter, Phigaro, and ProphET.  I also throw in PHASTER, but as it is not open source, I decided against it.  Having code available to peer review (or in this case, to install locally) is important to me.  If the title of this post bothers you, just pretend I am using 0-indexed counting.
 
 ## Our test data
 Erwinia carotovora subsp. atroseptica SCRI1043 [BX950851.1](https://www.ncbi.nlm.nih.gov/nuccore/BX950851.1), was chosen for a test bug, as one of the submitters confirmend that considerable human effort went into manually annotating the prophages. 
@@ -90,6 +90,35 @@ CAIIPDDM_03pp.6 CAIIPDDM_1_4116963_4175637
 Now, we have 1 that we have seen before, and 5 new ones.
 
 
+##  Phigaro
+Joe Healey recommended trying another tool, [Phigaro](https://github.com/lpenguin/phigaro).  why not? Its available on pip, how bad could it be?
+
+```
+conda create -n phigaro
+source activate phigaro
+pip install phigaro
+phigaro-setup
+
+```
+
+I am working on an HPC, so I do not have sudo access.  Strike 1 for phigaro.  But they include instruction for semi-manual setup.  
+
+I am stuck trying to get metagenemark.  Their licence page on their website isn't working.  I have emailed the authors. Strike 2.
+
+
+[6 hours later]
+The authors got it sorted out, and I now have it configured, after a bit of fiddling around with having the `.gm_key` in the right part of the filesystem.
+
+I ran the program as `phigaro -f ./BX950851.fasta -o BX950851_phigaro.txt`, getting the following result:
+```
+scaffold        begin   end
+BX950851.1 Erwinia carotovora subsp. atroseptica SCRI1043, complete genome      1356757 1376318
+BX950851.1 Erwinia carotovora subsp. atroseptica SCRI1043, complete genome      2928085 3003543
+BX950851.1 Erwinia carotovora subsp. atroseptica SCRI1043, complete genome      3106945 3119520
+BX950851.1 Erwinia carotovora subsp. atroseptica SCRI1043, complete genome      3735875 3765347
+BX950851.1 Erwinia carotovora subsp. atroseptica SCRI1043, complete genome      4143714 4184809
+```
+Compared to Phispy, we have 1, maybe two overlapping hits.  Both the PHASTER hits seem to be there, though.
 
 ## VirSorter
 
@@ -121,6 +150,35 @@ There is no easy way to determine whether these 6 loci are the same that were de
 
 ## Summary
 
+|                 | PHASTER | ProphET | phiSpy | phigaro | Virsorter  |
+|-----------------|---------|---------|--------|---------|---|
+| 2926054-2967509 | X       | o       | X      | X       | ?  |
+| 4140147-4180770 | X       | X       | o      | X       | ?  |
+| 3803975-3827465 |         | X       |        |         | ?  |
+| 1063490-1081325 |         |         | X      |         | ?  |
+| 2372933-2431115 |         |         | X      |         | ?  |
+| 3192250-3271834 |         |         | X      |         | ?  |
+| 1356757-1376318 |         |         |        | X       | ?  |
+| 3106945-3119520 |         |         |        | X       | ?  |
+| 3735875-3765347 |         |         |        | X       | ?  |
+|                 |         |         |        |         | ?  |
+
+
+
+
+
+
+
 This was not fun.
 
-I wish most of these were easier to install. I wish none of these were written in Perl. I wish all of these were open source. I wish Phispy was still maintained. I wish none of them were hosted on Sourceforge. I wish there weren't additional tools that I would need to compare to make this more complete. I wish these worked from raw reads rather than assemblies, as we know prophages are difficult to correcly assemble. I wish all the tools's publications had appropriate, benchmarked comparisons to existing tools. I wish I dodn't get 4 different answers from 4 different tools.
+- I wish most of these were easier to install.
+- I wish none of these were written in Perl.
+- I wish all of these were open source.
+- I wish Phispy was still maintained.
+- I wish none of them were hosted on Sourceforge.
+- I wish there weren't additional tools that I would need to compare to make this more complete.
+- I wish these worked from raw reads rather than assemblies, as we know prophages are difficult to correcly assemble.
+- I wish all the tools's publications had appropriate, benchmarked comparisons to existing tools.
+- I wish I dodn't get ~4~ 5 different answers from ~4~ 5 different tools.
+- I wish none of these involved instalation licenses
+
