@@ -1,6 +1,6 @@
 # Testing 3 Prophage finding tools
 
-I was searching for the best prophage finding tool for bacterial genomics.  After a literature review and recommendations from colleagues, I decided on 3: Phispy, VirSorter, and ProphET.  I also throw in PHASTER, but as it is not open source, I decided against it.  Having code available is peer review is important to me.  If the title of this post bothers you, just pretend I am using 0-indexed counting.
+I was searching for the best prophage finding tool for bacterial genomics.  After a literature review and recommendations from colleagues, I decided on 3: Phispy, VirSorter, and ProphET.  I also throw in PHASTER, but as it is not open source, I decided against it.  Having code available to peer review (or in this case, to install locally) is important to me.  If the title of this post bothers you, just pretend I am using 0-indexed counting.
 
 ## Our test data
 Erwinia carotovora subsp. atroseptica SCRI1043 [BX950851.1](https://www.ncbi.nlm.nih.gov/nuccore/BX950851.1), was chosen for a test bug, as one of the submitters confirmend that considerable human effort went into manually annotating the prophages. 
