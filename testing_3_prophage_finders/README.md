@@ -1,6 +1,6 @@
-# Testing ~3~ 4 Prophage finding tools
+# Testing  4 Prophage finding tools
 
-I was searching for the best prophage finding tool for bacterial genomics.  After a literature review and recommendations from colleagues, I decided on 3: Phispy, VirSorter, Phigaro, and ProphET.  I also throw in PHASTER, but as it is not open source, I decided against it.  Having code available to peer review (or in this case, to install locally) is important to me.  If the title of this post bothers you, just pretend I am using 0-indexed counting.
+I was searching for the best prophage finding tool for bacterial genomics.  After a literature review and recommendations from colleagues, I decided on 3 (updated: 4): Phispy, VirSorter, Phigaro, and ProphET.  I also throw in PHASTER, but as it is not open source, I decided against it.  Having code available to peer review (or in this case, to install locally) is important to me.  If the title of this post bothers you, just pretend I am using 0-indexed counting.
 
 ## Our test data
 Erwinia carotovora subsp. atroseptica SCRI1043 [BX950851.1](https://www.ncbi.nlm.nih.gov/nuccore/BX950851.1), was chosen for a test bug, as one of the submitters confirmend that considerable human effort went into manually annotating the prophages. 
@@ -161,11 +161,11 @@ There is no easy way to determine whether these 6 loci are the same that were de
 | 1356757-1376318 |         |         |        | X       | ?  |
 | 3106945-3119520 |         |         |        | X       | ?  |
 | 3735875-3765347 |         |         |        | X       | ?  |
-|                 |         |         |        |         | ?  |
 
 
-
-
+`X` = Hit 
+`o` = partial hit
+`?` = unknown    
 
 
 
@@ -179,6 +179,6 @@ This was not fun.
 - I wish there weren't additional tools that I would need to compare to make this more complete.
 - I wish these worked from raw reads rather than assemblies, as we know prophages are difficult to correcly assemble.
 - I wish all the tools's publications had appropriate, benchmarked comparisons to existing tools.
-- I wish I dodn't get ~4~ 5 different answers from ~4~ 5 different tools.
+- I wish I didn't get  5 different answers from  5 different tools.
 - I wish none of these involved instalation licenses
 
