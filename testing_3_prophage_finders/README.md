@@ -151,29 +151,29 @@ There is no easy way to determine whether these 6 loci are the same that were de
 ## Summary
 
 
-| CDS identifiers | Island no. | Acquisition evidence                       | Putative phenotype(s)                                                  | start   | stop    | PHASTER | ProphET | phiSpy | phigaro | VirSorter |
-|-----------------|------------|--------------------------------------------|------------------------------------------------------------------------|---------|---------|---------|---------|--------|---------|-----------|
-| ECA0499-0510    | HAI1       | fasta analysis*                            | Capsular polysaccharide biosynthesis                                   | 574080  | 587651  |         |         |        |         | ?         |
-| ECA0516-0614    | HAI2       | Integrase and tRNA                         | Polyketide phytotoxin biosynthesis (cfa) ; Agglutination/adhesion      | 590844  | 688402  |         |         |        |         | ?         |
-| ECA0665-0678    | HAI3       | Phage genes                                |                                                                        | 739283  | 750273  |         |         |        |         | ?         |
-|                 |            |                                            |                                                                        | 1063490 | 1081325 |         |         | X      |         | ?         |
-|                 |            |                                            |                                                                        | 1356757 | 1376318 |         |         |        | X       | ?         |
-| ECA1054-1067    | HAI4       | Integrase ; Low-percent GC region          |                                                                        | 1180862 | 1196644 |         |         |        |         | ?         |
-| ECA1416-1443    | HAI5       | Low-percent GC region                      | Exopolysaccharide and O-antigen biosynthesis                           | 1606718 | 1638218 |         |         |        |         | ?         |
-| ECA1466-1488    | HAI6       | fasta analysis*                            | Nonribosomal peptide phytotoxin                                        | 1666599 | 1727303 |         |         |        |         | ?         |
-| ECA1598-1679    | HAI7       | Integrase and tRNA ; Low-percent GC region | Type IV secretion (virB) ; Integrated plasmid ; Agglutination/adhesion | 1855523 | 1926959 |         |         |        |         | ?         |
-| ECA2045-2182    | HAI8       | fasta analysis*                            | Type III secretion (hrp); Agglutination/adhesion (hecAB)               | 2324722 | 2486065 |         |         | X      |         | ?         |
-| ECA2598-2637    | HAI9       | Phage genes                                | P2 family prophage                                                     | 2935461 | 2966671 | X       | o       | X      | X       | ?         |
-| ECA2694-2705    | HAI10      | fasta analysis*                            | Phenazine antibiotic biosynthesis (ehp)                                | 3029319 | 3040751 |         |         |        |         | ?         |
-| ECA2750-2759    | HAI11      | Phage genes ; Integrase and tRNA           |                                                                        | 3092131 | 3101182 |         |         |        |         | ?         |
-|                 |            |                                            |                                                                        | 3106945 | 3119520 |         |         |        | X       | ?         |
-| ECA2850-2879    | HAI12      | Integrase and tRNA                         | Rhs and its accessory element VgrG                                     | 3194782 | 3227396 |         |         | X      |         | ?         |
-| ECA2889-2921    | HAI13      | Integrase and tRNA ; Low-percent GC region | Putative integrated plasmid                                            | 3236381 | 3263492 |         |         |        |         | ?         |
-| ECA2936-3000    | HAI14      | fasta analysis*                            | Nitrogen fixation (nif)                                                | 3280604 | 3355481 |         |         |        |         | ?         |
-| ECA3262-3270    | HAI15      | fasta analysis*                            | Agglutination/adhesion (aggA)                                          | 3652523 | 3677516 |         |         |        |         | ?         |
-|                 |            |                                            |                                                                        | 3735875 | 3765347 |         |         |        | X       | ?         |
-| ECA3378-3460    | HAI16      | Integrase and tRNA                         |                                                                        | 3794816 | 3880056 |         | X       |        |         | ?         |
-| ECA3695-3742    | HAI17      | Phage genes                                | Prophage                                                               | 4144591 | 4180770 | X       | X       | o      | X       | ?         |
+| Island no. | Putative phenotype(s)                                                  | start   | stop    | PHASTER | ProphET | phiSpy | phigaro | VirSorter |
+|------------|------------------------------------------------------------------------|---------|---------|---------|---------|--------|---------|-----------|
+| HAI1       | Capsular polysaccharide biosynthesis                                   | 574080  | 587651  |         |         |        |         | ?         |
+| HAI2       | Polyketide phytotoxin biosynthesis (cfa) ; Agglutination/adhesion      | 590844  | 688402  |         |         |        |         | ?         |
+| HAI3       |                                                                        | 739283  | 750273  |         |         |        |         | ?         |
+|            |                                                                        | 1063490 | 1081325 |         |         | X      |         | ?         |
+|            |                                                                        | 1356757 | 1376318 |         |         |        | X       | ?         |
+| HAI4       |                                                                        | 1180862 | 1196644 |         |         |        |         | ?         |
+| HAI5       | Exopolysaccharide and O-antigen biosynthesis                           | 1606718 | 1638218 |         |         |        |         | ?         |
+| HAI6       | Nonribosomal peptide phytotoxin                                        | 1666599 | 1727303 |         |         |        |         | ?         |
+| HAI7       | Type IV secretion (virB) ; Integrated plasmid ; Agglutination/adhesion | 1855523 | 1926959 |         |         |        |         | ?         |
+| HAI8       | Type III secretion (hrp); Agglutination/adhesion (hecAB)               | 2324722 | 2486065 |         |         | X      |         | ?         |
+| HAI9       | P2 family prophage                                                     | 2935461 | 2966671 | X       | o       | X      | X       | ?         |
+| HAI10      | Phenazine antibiotic biosynthesis (ehp)                                | 3029319 | 3040751 |         |         |        |         | ?         |
+| HAI11      |                                                                        | 3092131 | 3101182 |         |         |        |         | ?         |
+|            |                                                                        | 3106945 | 3119520 |         |         |        | X       | ?         |
+| HAI12      | Rhs and its accessory element VgrG                                     | 3194782 | 3227396 |         |         | X      |         | ?         |
+| HAI13      | Putative integrated plasmid                                            | 3236381 | 3263492 |         |         |        |         | ?         |
+| HAI14      | Nitrogen fixation (nif)                                                | 3280604 | 3355481 |         |         |        |         | ?         |
+| HAI15      | Agglutination/adhesion (aggA)                                          | 3652523 | 3677516 |         |         |        |         | ?         |
+|            |                                                                        | 3735875 | 3765347 |         |         |        | X       | ?         |
+| HAI16      |                                                                        | 3794816 | 3880056 |         | X       |        |         | ?         |
+| HAI17      | Prophage                                                               | 4144591 | 4180770 | X       | X       | o      | X       | ?         |
 
 `X` = Hit 
 `o` = partial hit
