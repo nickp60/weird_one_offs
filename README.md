@@ -23,4 +23,4 @@ We did a very informal blind taste test of 14 wines under 7 euro.
 
 ## Comparing 3 Phage Finding Tools
 
-[Here I compare 3 phage finding tools](./testing_3_prophage_finders/README.md)
+[Here I compare 4 phage finding tools](./testing_3_prophage_finders/README.md)

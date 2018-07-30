@@ -150,6 +150,7 @@ There is no easy way to determine whether these 6 loci are the same that were de
 
 ## Summary
 
+
 | CDS identifiers | Island no. | Acquisition evidence                       | Putative phenotype(s)                                                  | start   | stop    | PHASTER | ProphET | phiSpy | phigaro | VirSorter |
 |-----------------|------------|--------------------------------------------|------------------------------------------------------------------------|---------|---------|---------|---------|--------|---------|-----------|
 | ECA0499-0510    | HAI1       | fasta analysis*                            | Capsular polysaccharide biosynthesis                                   | 574080  | 587651  |         |         |        |         | ?         |
@@ -173,6 +174,7 @@ There is no easy way to determine whether these 6 loci are the same that were de
 |                 |            |                                            |                                                                        | 3735875 | 3765347 |         |         |        | X       | ?         |
 | ECA3378-3460    | HAI16      | Integrase and tRNA                         |                                                                        | 3794816 | 3880056 |         | X       |        |         | ?         |
 | ECA3695-3742    | HAI17      | Phage genes                                | Prophage                                                               | 4144591 | 4180770 | X       | X       | o      | X       | ?         |
+
 `X` = Hit 
 `o` = partial hit
 `?` = unknown    
