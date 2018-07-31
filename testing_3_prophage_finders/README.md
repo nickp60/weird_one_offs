@@ -129,34 +129,36 @@ Update: talked with the authors on how to find the coordinates.
 
 ## Summary
 
-
+```
 | Island no. | Putative phenotype(s)                                                  | start   | stop    | PHASTER | ProphET | phiSpy | phigaro | VirSorter |
 |------------|------------------------------------------------------------------------|---------|---------|---------|---------|--------|---------|-----------|
 | HAI1       | Capsular polysaccharide biosynthesis                                   | 574080  | 587651  |         |         |        |         |    X      |
 | HAI2       | Polyketide phytotoxin biosynthesis (cfa)                               | 590844  | 688402  |         |         |        |         |    X      |
 | HAI3       |                                                                        | 739283  | 750273  |         |         |        |         |           |
-|            |                                                                        | 1063490 | 1081325 |         |         | X      |         |           |
-|            |                                                                        | 1356757 | 1376318 |         |         |        | X       |           |
+|            |                                                                        | 1063490 | 1081325 |         |         |   X    |         |           |
+|            |                                                                        | 1356757 | 1376318 |         |         |        |   X     |           |
 | HAI4       |                                                                        | 1180862 | 1196644 |         |         |        |         |           |
 | HAI5       | Exopolysaccharide and O-antigen biosynthesis                           | 1606718 | 1638218 |         |         |        |         |           |
 | HAI6       | Nonribosomal peptide phytotoxin                                        | 1666599 | 1727303 |         |         |        |         |           |
 | HAI7       | Type IV secretion (virB) ; Integrated plasmid ;                        | 1855523 | 1926959 |         |         |        |         |    X      |
-| HAI8       | Type III secretion (hrp);  (hecAB)                                     | 2324722 | 2486065 |         |         | X      |         |    X      |
-| HAI9       | P2 family prophage                                                     | 2935461 | 2966671 | X       | o       | X      | X       |    X      |
+| HAI8       | Type III secretion (hrp);  (hecAB)                                     | 2324722 | 2486065 |         |         |   X    |         |    X      |
+| HAI9       | P2 family prophage                                                     | 2935461 | 2966671 |   X     |   o     |   X    |   X     |    X      |
 | HAI10      | Phenazine antibiotic biosynthesis (ehp)                                | 3029319 | 3040751 |         |         |        |         |           |
 | HAI11      |                                                                        | 3092131 | 3101182 |         |         |        |         |           |
-|            |                                                                        | 3106945 | 3119520 |         |         |        | X       |           |
-| HAI12      | Rhs and its accessory element VgrG                                     | 3194782 | 3227396 |         |         | X      |         |           |
+|            |                                                                        | 3106945 | 3119520 |         |         |        |   X     |           |
+| HAI12      | Rhs and its accessory element VgrG                                     | 3194782 | 3227396 |         |         |   X    |         |           |
 | HAI13      | Putative integrated plasmid                                            | 3236381 | 3263492 |         |         |        |         |    X      |
 | HAI14      | Nitrogen fixation (nif)                                                | 3280604 | 3355481 |         |         |        |         |           |
 | HAI15      | Agglutination/adhesion (aggA)                                          | 3652523 | 3677516 |         |         |        |         |           |
-|            |                                                                        | 3735875 | 3765347 |         |         |        | X       |           |
-| HAI16      |                                                                        | 3794816 | 3880056 |         | X       |        |         |           |
-| HAI17      | Prophage                                                               | 4144591 | 4180770 | X       | X       | o      | X       |    X      |
+|            |                                                                        | 3735875 | 3765347 |         |         |        |   X     |           |
+| HAI16      |                                                                        | 3794816 | 3880056 |         |   X     |        |         |           |
+| HAI17      | Prophage                                                               | 4144591 | 4180770 |   X     |   X     |   o    |   X     |    X      |
 
 `X` = Hit 
 `o` = partial hit
 `?` = unknown    
+```
+
 This table adapted from table 1 of https://www.ncbi.nlm.nih.gov/pubmed/15263089
 
 We do appear to detect the obvious phages (marked HAI11 and HAI17), but thats where the similarity ends.  We don't really know what to make of the other hits.  And this is sensible -- the longer a prophage is integrated into a genome, the more replication errors are going to occur, and the more that region is going to start blending in to the host region.  I think that we learn is that any of these softwares can detect obvious (read: recent) prophages, but for more ancestral ones, its anyones guess.
