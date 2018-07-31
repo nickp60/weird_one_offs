@@ -124,61 +124,40 @@ Compared to Phispy, we have 1, maybe two overlapping hits.  Both the PHASTER hit
 
 Lastly, we tried Virsorter.  You have to download a sizable database, but they give a nice walkthrough on how to get set up on their Github page.  I'll spare you the details of running it; it was pretty pain-free. Here are the results
 
-```
-## 1 - Complete phage contigs - category 1 (sure)
-## Contig_id,Nb genes contigs,Fragment,Nb genes,Category,Nb phage hallmark genes,Phage gene enrichment sig,Non-Caudovirales phage gene enrichment sig,Pfam depletion sig,Uncharacterized enrichment sig,Strand switch depletion sig,Short genes enrichment sig
-## 2 - Complete phage contigs - category 2 (somewhat sure)
-## Contig_id,Nb genes contigs,Fragment,Nb genes,Category,Nb phage hallmark genes,Phage gene enrichment sig,Non-Caudovirales phage gene enrichment sig,Pfam depletion sig,Uncharacterized enrichment sig,Strand switch depletion sig,Short genes enrichment sig
-## 3 - Complete phage contigs - category 3 (not so sure)
-## Contig_id,Nb genes contigs,Fragment,Nb genes,Category,Nb phage hallmark genes,Phage gene enrichment sig,Non-Caudovirales phage gene enrichment sig,Pfam depletion sig,Uncharacterized enrichment sig,Strand switch depletion sig,Short genes enrichment sig
-## 4 - Prophages - category 1 (sure)
-## Contig_id,Nb genes contigs,Fragment,Nb genes,Category,Nb phage hallmark genes,Phage gene enrichment sig,Non-Caudovirales phage gene enrichment sig,Pfam depletion sig,Uncharacterized enrichment sig,Strand switch depletion sig,Short genes enrichment sig
-## 5 - Prophages - category 2 (somewhat sure)
-## Contig_id,Nb genes contigs,Fragment,Nb genes,Category,Nb phage hallmark genes,Phage gene enrichment sig,Non-Caudovirales phage gene enrichment sig,Pfam depletion sig,Uncharacterized enrichment sig,Strand switch depletion sig,Short genes enrichment sig
-VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome,4472,VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome-gene_1560-gene_1660,101,2,,,gene_1560-gene_1659:10.92667850233669,gene_1579-gene_1660:19.24662442926656,gene_1587-gene_1659:15.28420627181487,gene_1560-gene_1659:10.92667850233669,gene_1560-gene_1659:10.92667850233669
-VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome,4472,VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome-gene_2057-gene_2156,100,2,,,gene_2057-gene_2156:2.97144502070165,gene_2095-gene_2156:3.09020715252545,gene_2057-gene_2156:2.97144502070165,gene_2057-gene_2156:2.97144502070165,gene_2057-gene_2156:2.97144502070165
-VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome,4472,VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome-gene_2569-gene_2607,39,2,8,gene_2569-gene_2599:14.70917474387684,,gene_2569-gene_2607:16.23771742845442,,,
-VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome,4472,VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome-gene_3652-gene_3703,52,2,6,gene_3661-gene_3702:13.03985375154766,,gene_3652-gene_3703:23.81876232640174,,,
-VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome,4472,VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome-gene_493-gene_605,113,2,,,gene_493-gene_592:10.57937544372843,gene_510-gene_605:12.30498048618490,gene_493-gene_592:10.57937544372843,gene_493-gene_592:10.57937544372843,gene_493-gene_592:10.57937544372843
-## 6 - Prophages - category 3 (not so sure)
-## Contig_id,Nb genes contigs,Fragment,Nb genes,Category,Nb phage hallmark genes,Phage gene enrichment sig,Non-Caudovirales phage gene enrichment sig,Pfam depletion sig,Uncharacterized enrichment sig,Strand switch depletion sig,Short genes enrichment sig
-VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome,4472,VIRSorter_BX950851_1_Erwinia_carotovora_subsp__atroseptica_SCRI1043__complete_genome-gene_2862-gene_2886,25,3,,,,gene_2866-gene_2886:11.02225636107671,gene_2862-gene_2886:8.40735333604608,,
+Update: talked with the authors on how to find the coordinates.
 
-```
-
-There is no easy way to determine whether these 6 loci are the same that were detected with Phispy, as there is no indication where on the genome these bits are. I would have to go into the other output file to pull out the predicted sequence.
 
 ## Summary
 
 
 | Island no. | Putative phenotype(s)                                                  | start   | stop    | PHASTER | ProphET | phiSpy | phigaro | VirSorter |
 |------------|------------------------------------------------------------------------|---------|---------|---------|---------|--------|---------|-----------|
-| HAI1       | Capsular polysaccharide biosynthesis                                   | 574080  | 587651  |         |         |        |         | ?         |
-| HAI2       | Polyketide phytotoxin biosynthesis (cfa) ; Agglutination/adhesion      | 590844  | 688402  |         |         |        |         | ?         |
-| HAI3       |                                                                        | 739283  | 750273  |         |         |        |         | ?         |
-|            |                                                                        | 1063490 | 1081325 |         |         | X      |         | ?         |
-|            |                                                                        | 1356757 | 1376318 |         |         |        | X       | ?         |
-| HAI4       |                                                                        | 1180862 | 1196644 |         |         |        |         | ?         |
-| HAI5       | Exopolysaccharide and O-antigen biosynthesis                           | 1606718 | 1638218 |         |         |        |         | ?         |
-| HAI6       | Nonribosomal peptide phytotoxin                                        | 1666599 | 1727303 |         |         |        |         | ?         |
-| HAI7       | Type IV secretion (virB) ; Integrated plasmid ; Agglutination/adhesion | 1855523 | 1926959 |         |         |        |         | ?         |
-| HAI8       | Type III secretion (hrp); Agglutination/adhesion (hecAB)               | 2324722 | 2486065 |         |         | X      |         | ?         |
-| HAI9       | P2 family prophage                                                     | 2935461 | 2966671 | X       | o       | X      | X       | ?         |
-| HAI10      | Phenazine antibiotic biosynthesis (ehp)                                | 3029319 | 3040751 |         |         |        |         | ?         |
-| HAI11      |                                                                        | 3092131 | 3101182 |         |         |        |         | ?         |
-|            |                                                                        | 3106945 | 3119520 |         |         |        | X       | ?         |
-| HAI12      | Rhs and its accessory element VgrG                                     | 3194782 | 3227396 |         |         | X      |         | ?         |
-| HAI13      | Putative integrated plasmid                                            | 3236381 | 3263492 |         |         |        |         | ?         |
-| HAI14      | Nitrogen fixation (nif)                                                | 3280604 | 3355481 |         |         |        |         | ?         |
-| HAI15      | Agglutination/adhesion (aggA)                                          | 3652523 | 3677516 |         |         |        |         | ?         |
-|            |                                                                        | 3735875 | 3765347 |         |         |        | X       | ?         |
-| HAI16      |                                                                        | 3794816 | 3880056 |         | X       |        |         | ?         |
-| HAI17      | Prophage                                                               | 4144591 | 4180770 | X       | X       | o      | X       | ?         |
+| HAI1       | Capsular polysaccharide biosynthesis                                   | 574080  | 587651  |         |         |        |         |    X      |
+| HAI2       | Polyketide phytotoxin biosynthesis (cfa)                               | 590844  | 688402  |         |         |        |         |    X      |
+| HAI3       |                                                                        | 739283  | 750273  |         |         |        |         |           |
+|            |                                                                        | 1063490 | 1081325 |         |         | X      |         |           |
+|            |                                                                        | 1356757 | 1376318 |         |         |        | X       |           |
+| HAI4       |                                                                        | 1180862 | 1196644 |         |         |        |         |           |
+| HAI5       | Exopolysaccharide and O-antigen biosynthesis                           | 1606718 | 1638218 |         |         |        |         |           |
+| HAI6       | Nonribosomal peptide phytotoxin                                        | 1666599 | 1727303 |         |         |        |         |           |
+| HAI7       | Type IV secretion (virB) ; Integrated plasmid ;                        | 1855523 | 1926959 |         |         |        |         |    X      |
+| HAI8       | Type III secretion (hrp);  (hecAB)                                     | 2324722 | 2486065 |         |         | X      |         |    X      |
+| HAI9       | P2 family prophage                                                     | 2935461 | 2966671 | X       | o       | X      | X       |    X      |
+| HAI10      | Phenazine antibiotic biosynthesis (ehp)                                | 3029319 | 3040751 |         |         |        |         |           |
+| HAI11      |                                                                        | 3092131 | 3101182 |         |         |        |         |           |
+|            |                                                                        | 3106945 | 3119520 |         |         |        | X       |           |
+| HAI12      | Rhs and its accessory element VgrG                                     | 3194782 | 3227396 |         |         | X      |         |           |
+| HAI13      | Putative integrated plasmid                                            | 3236381 | 3263492 |         |         |        |         |    X      |
+| HAI14      | Nitrogen fixation (nif)                                                | 3280604 | 3355481 |         |         |        |         |           |
+| HAI15      | Agglutination/adhesion (aggA)                                          | 3652523 | 3677516 |         |         |        |         |           |
+|            |                                                                        | 3735875 | 3765347 |         |         |        | X       |           |
+| HAI16      |                                                                        | 3794816 | 3880056 |         | X       |        |         |           |
+| HAI17      | Prophage                                                               | 4144591 | 4180770 | X       | X       | o      | X       |    X      |
 
 `X` = Hit 
 `o` = partial hit
 `?` = unknown    
-
+This table adapted from table 1 of https://www.ncbi.nlm.nih.gov/pubmed/15263089
 
 We do appear to detect the obvious phages (marked HAI11 and HAI17), but thats where the similarity ends.  We don't really know what to make of the other hits.  And this is sensible -- the longer a prophage is integrated into a genome, the more replication errors are going to occur, and the more that region is going to start blending in to the host region.  I think that we learn is that any of these softwares can detect obvious (read: recent) prophages, but for more ancestral ones, its anyones guess.
 
