@@ -154,19 +154,24 @@ Update: talked with the authors on how to find the coordinates.
 | HAI16      |                                                                        | 3794816 | 3880056 |         |   X     |        |         |           |
 | HAI17      | Prophage                                                               | 4144591 | 4180770 |   X     |   X     |   o    |   X     |    X      |
 
+```
 `X` = Hit 
 `o` = partial hit
 `?` = unknown    
-```
 
 This table adapted from table 1 of https://www.ncbi.nlm.nih.gov/pubmed/15263089
 
 We do appear to detect the obvious phages (marked HAI11 and HAI17), but thats where the similarity ends.  We don't really know what to make of the other hits.  And this is sensible -- the longer a prophage is integrated into a genome, the more replication errors are going to occur, and the more that region is going to start blending in to the host region.  I think that we learn is that any of these softwares can detect obvious (read: recent) prophages, but for more ancestral ones, its anyones guess.
 
+If one was being conservative, they would likely choose PHASTER, and I would, if it wasn't a webapp.  The next closest is ProphET, but what about HAI16?  If that is not a legitimate phage, than a 33% false pasitive rate is unacceptable. Manually, I went through and blasted the genes in HAI16, to see whether they appeared to be phagy. And they did!  Conversely, I did the same with genes between 1063490-1081325 to see whether phispy would be usable -- unfortuately, none of those genes looked like phage at all.  For phigaro, I checked the  1356757-1376318 region; nothing looked phagy, and the region contained the only copy of gyrA, which I  am pretty sure is essential for Erwinia. The 3106945-3119520 region had one partial hit for a phage tail protein, but nothing else.
 
+VirSorter appears to detect anything that doesn't look like the host genome, including plasmids; that rule out VirSorter.  I will be using some different software for plasmid detection.
+
+ProphET seems to  be the most conservative.
 
 ## Conclusion
 
+Keep in mind that this is n_genoms = 1.  Take this with a grain of salt.
 
 This was not fun.
 
