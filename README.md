@@ -2,20 +2,23 @@ Here be dragons....
 
 
 ## sraFind
-I was curious how many complete genomes had publicly available data associated on the SRA.
+I was curious how many complete genomes had publicly available data associated on the SRA. We do this in 4 stages:
 
-[This script gets a list of all accessions for complete prokaryotic genomes](sraFind/scripts/get_acces.py)
 
-[This script gets the associated BioProject accession, and (if available) SRA accession](sraFind/scripts/fetcher.py)
+1. Parse NCBI's `prokaryotes.txt` file, write out Entrez cmds
 
-[This script plots the results](sraFind/scripts/plot_results.R)
+2. Run all those entrez commands in parallel
 
-[This is a plot of the results](sraFind/results/2017-10-16-results-byyear.png)
+3. Parse results
+
+4. Plot results
+
+[See the README here to learn more](https://github.com/nickp60/sraFind)
 
 ## Viruses in AD
-Click here for a peek at the state of viral metagenome detection from anaerobic digestion: [viruses_in_ad](./viruses_in_ad/viruses_in_ad.html)
+[Click here](./viruses_in_ad/viruses_in_ad.html) for a peek at the state of viral metagenome detection from anaerobic digestion:
 
-## cheapwine
+## Cheap Wine
 We did a very informal blind taste test of 14 wines under 7 euro.
 
 [The analysis can be found here](./cheapwine/bbb.html)
@@ -24,3 +27,6 @@ We did a very informal blind taste test of 14 wines under 7 euro.
 ## Comparing 3 Phage Finding Tools
 
 [Here I compare 4 phage finding tools](./testing_3_prophage_finders/README.md)
+
+## Poker Simulations
+Have you ever wanted to run lots of Texas Hold'em simulations? [I have](./texas_holdem/cards.R), so I wrote this.  One day it might be a shiny app.
