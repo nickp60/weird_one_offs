@@ -36,7 +36,7 @@ We recruited 15 volunteers, including yours truly. While I did not label the win
 
 One deviation from last year's analysis was the presense of a lovingly prepared booklet for keeping track of tasting notes, and comparing tasting notes to those provided by the manufacturer. While one could consider this a bias, we considered this a was to counteract the negativity associated with cheap wine. So, instead of expecting a bad wine, tasters might be expecting a floral bouquet, or oakiness.  
 
-The code for this analysis can be found at <http://github.com/nickp60/weird_one_offs/cheapwine>.
+The code for this analysis can be found at <https://github.com/nickp60/weird_one_offs/tree/master/cheapwine>.
 
 ## The Data
 Let's read in the tasting data; I ented the data, having collected the booklets after the tasting.
