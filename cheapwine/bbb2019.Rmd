@@ -83,6 +83,7 @@ str(dat)
 ```
 
 Now, what do the rating look like?
+
 ```{r echo=FALSE}
 ggplot(dat, aes(x=Wine, y=rating,group=Wine, fill=category)) + facet_grid(~category) + geom_boxplot() + scale_fill_manual(values = mycolors, guide=F) + labs(title = "Raw ratings of Red vs White wines", y="Rating", x="Wine") + wine_theme()
 
@@ -132,7 +133,7 @@ The parameters we are estimating:
 - $personal_bias$: the variation introduced by whether a person prefers red or white 
 
 
-```{r}
+```{r  echo=FALSE}
 sdat <- list(
   N = nrow(dat),
   Npref = length(unique(dat$pref)),
@@ -151,7 +152,7 @@ fit <- stan(data = sdat, file = "./models/wine2019.stan", chains = 4)
 
 
 We have fit the data to the model, and we need to check the fit.  First, we can plot the Rhat statistic, which should be very close to 1, indicating good mixing of the Markov sampling chains in the modeling. We can also visualize the chains.
-```{r}
+```{r  echo=FALSE}
 stan_rhat(fit)
 traceplot(fit)
 ``` 
@@ -161,7 +162,7 @@ The model fits well!  This was not the case for the first several models, either
 
 So what effect of preference do we see?
 
-```{r}
+```{r  echo=FALSE}
 plot(fit, pars="not_my_fav")
 plot(fit, pars="personal_bias")
 #stan_dens(fit, pars="not_my_fav")
@@ -169,7 +170,7 @@ plot(fit, pars="personal_bias")
 
 We can see the $personal\_bias$ parameter recapitulating the bias we saw in the earlier plot showing personal preference means. This parameter can be used to correct for those personal preferences.
 
-The $not\_my\_fav$ parameter, we can see the effct of rating a non-prefered wine. This is a very small effect, with the confidence intervals including 0 in both. We may have some slight bias among white wine preferers ($not\_my\_fav[2]$).
+The $not\_my\_fav$ parameter, we can see the effct of rating a non-prefered wine. It is small, as it includes 0, but the standard deviations are wide, indicating that the preferences could make rating erratic.
 
 
 Finally, we can plot the modeled values over our observed values:
@@ -189,11 +190,11 @@ But then again, white wine 5 *was* terrible...
 Lets add some names to these wines, and sort them by their cost:
 
 
-```{r}
+```{r  echo=FALSE}
 names <- read.csv("./data/names2019.csv")
 
 new_dat <- merge(new_dat, names, by=c("Wine", "category"))
-ggplot(new_dat  %>% group_by(order) %>% mutate(meanmean=mean(mean)), aes(x=reorder(Name, Cost), y=rating, fill=category)) + geom_boxplot() + geom_point(aes(y=meanmean), color="blue", size=2) + geom_linerange(aes(ymin=ymin, ymax=ymax), color="blue")  + scale_fill_manual(values = mycolors, guide=F) + labs(title = "Comparing modeled results to observed results", subtitle="(Fitted values in blue; sorted by increasing price)", y="Rating", x="Wine")+  wine_theme() + theme(axis.text.x = element_text(angle = 45, hjust=1)) + geom_text(aes(y=11, label=Cost), col='red') 
+ggplot(new_dat  %>% group_by(order) %>% mutate(meanmean=mean(mean)), aes(x=reorder(Name, Cost), y=rating, fill=category)) + geom_boxplot() + geom_point(aes(y=meanmean), color="blue", size=2) + geom_linerange(aes(ymin=ymin, ymax=ymax), color="blue")  + scale_fill_manual(values = mycolors, guide=F) + labs(title = "Comparing modeled results to observed results", subtitle="(Fitted values in blue; sorted by increasing price)", y="Rating", x="Wine")+  wine_theme() + theme(axis.text.x = element_text(angle = 45, hjust=1)) + geom_text(aes(y=11, label=Cost), col='red') + geom_text(aes(y=0, label=paste(category, Wine )), col='grey20') 
 ```
 
 
