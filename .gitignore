@@ -4,3 +4,5 @@
 *.Rproj
 .Rproj.user
 .Rhistory
+.sass-cache/
+_site/

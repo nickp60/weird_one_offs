@@ -1,0 +1,199 @@
+---
+title: "Best of a Bad Bunch 2019"
+subtitle: '(or, "happy hour feat. Bayes")'
+author: "Nicholas Waters"
+date: "23/2/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rstan)
+options(mc.cores = parallel::detectCores())
+mycolors = c("#EF4040", "#FBFFAF", "darkgreen")
+#setwd("~/GitHub/weird_one_offs/cheapwine/")
+
+wine_theme <- function () { 
+    theme_bw(base_size=14) %+replace% 
+        theme(
+            panel.background  = element_blank(),
+            plot.background = element_rect(fill="gray96", colour=NA), 
+            panel.border = element_blank(),
+            axis.line = element_line(),
+            legend.background = element_rect(fill="transparent", colour=NA),
+            legend.key = element_rect(fill="transparent", colour=NA)
+        )
+}
+```
+## The premise
+Each year for the NUIG Postgrad Ball (hosted by Microsoc, NUIG's Microbiology Society),  we need to provide wine.  We are but poor students, and have no sommelier for the department.  So, we set out to find the best wine in Galway in February 2019.  The best wine for 7 euro or under, that is. As this is the second year such an analysis, we have some loose priors from last year's results, that we may be able to incorporate. 
+
+## The Study
+We recruited 15 volunteers, including yours truly. While I did not label the wines, we can still consider this a single-blind study. We covered the label of the wines with blank paper, removed corks to prevent the cork-vs-screw cap bias, and labeled the bottles White [1-5] or Red [1-5], as needed.  Red wines were opened an hour prior to tasting to breathe, and white wines were chilled at least 30 minutes. Samples were poured in order of the bottle number (white 1-5, then red 1-5).  A vase for excess wine was provided to prevent the pressure to finish ones glass.  Approximately 5-15 ml were provided in either a wine or champagne glass (due to availability).  Participants were instructed to note characteristics of the wine and rate on a scale from 1 to ten.
+
+One deviation from last year's analysis was the presense of a lovingly prepared booklet for keeping track of tasting notes, and comparing tasting notes to those provided by the manufacturer. While one could consider this a bias, we considered this a was to counteract the negativity associated with cheap wine. So, instead of expecting a bad wine, tasters might be expecting a floral bouquet, or oakiness.  
+
+The code for this analysis can be found at <http://github.com/nickp60/weird_one_offs/cheapwine>.
+
+## The Data
+Let's read in the tasting data; I ented the data, having collected the booklets after the tasting.
+
+Here I added in the tasting order as well:
+
+```{r }
+dat <- read.csv("./data/wine2019.csv", stringsAsFactors = F)
+dat$order <- rep(1:10, nrow(dat)/10)
+str(dat)
+# I removed 3 missing values
+dat <- dat %>% filter(!is.na(rating)) 
+
+```
+
+One difference between this analysis and the 2018 analysis was the addition of a self-reeported preference: does a taster *generally* prefer red or white wine?  We wanted to see how that effected the mix.
+
+One taster reported "none", instead of reed or white. To avoid adding the extra complexity, we imputed their preference based on their responses:
+
+```{r}
+dat %>% filter(preference == "none") %>% group_by(category) %>% summarize(mean=mean(rating))
+
+```
+
+They have a slight preference for white, so we will include them in that category.  We also coded red/white as 1/2 for later analysis (both for preference and category).
+
+So do we have an equal spread of red vs white preferences?
+
+```{r}
+dat$preference <- ifelse(dat$preference == "none", "white", dat$preference)
+ggplot(dat %>% distinct(Person, preference), aes(x=preference, fill=preference)) + geom_histogram(stat="count", color="black") +  scale_fill_manual(values = mycolors, guide=F) + labs(title = "Taster's preferences", y="Number of Tasters", x="") + wine_theme()
+```
+
+No!  More people prefer red wine.
+
+
+
+```{r}
+dat$preference <- as.factor( paste("Prefers", dat$preference))
+dat$pref<- ifelse(dat$preference == "white", 1, 2)
+dat$cat <- ifelse(dat$category == "white", 1, 2)
+
+str(dat)
+```
+
+Now, what do the rating look like?
+```{r echo=FALSE}
+ggplot(dat, aes(x=Wine, y=rating,group=Wine, fill=category)) + facet_grid(~category) + geom_boxplot() + scale_fill_manual(values = mycolors, guide=F) + labs(title = "Raw ratings of Red vs White wines", y="Rating", x="Wine") + wine_theme()
+
+ggplot(dat, aes(x=Wine, y=rating, fill=category, group=Wine))  +   facet_grid(~category + preference) + geom_boxplot() + geom_jitter(width = .1, height = .2, shape=1) + scale_fill_manual(values = mycolors, guide=F) + labs(title = "Ratings of Red vs White wines, by taster's preference", y="Rating", x="Wine")+  wine_theme()
+
+```
+
+So we can start to see a few interesting things.  We see some trends to prefering certain wines.  One curious thing (coroborated by annecodotal evidence) is that there appears to be a fatigue effect. We will come back to that later.  First, lets take a quick look if there are any crazy tasters:
+
+```{r echo=FALSE}
+ggplot(dat, aes(y=rating, x=as.factor(Person), fill=category, group=interaction(Person, category))) + geom_boxplot() + facet_grid(~preference, scales = "free_x") + scale_fill_manual(values = mycolors, guide=F) + labs(title = "Comparing taster's preferences to their average ratings", y="Rating", x="Taster")+  wine_theme()
+```
+
+Interestingly, it looks like people's ratings mostly followed their professed preferences, so thats good for consistency.
+
+But which wine is best?
+
+## A Bayesian approach to wine tasting
+
+I have, for better or worse, drunken the Bayesian Kool-Aid, so a natural next step would be to model the data in such a manner.  
+
+The reason for doing this is several-fold:
+
+- low sample sizes
+- personal priors (prefering red or white)
+- a potential trend due to tasting fatigue
+- a bit of missing data
+
+All these things make for difficult statistical analysis by convential methods, but arer prime for building a hierarchical model.
+
+The file <./models/wine2019.stan>  contains the model itself, which I will describe here.  I tried to use common naming from the previous data.
+
+
+For those unfamiliar with Bayesian modelling, the general premise is to use the data and any prior information to estimate different parameters of a model, in probability-based manner.  This process is done using the Stan modeling software, which has an interface for use with R.  
+
+### The Model
+Fom the plots above, it looks like the actual quality of the wine is affected linearly by time (ie, the tasting order, from tasting fatigue), plus a taster's preference for red vs white, plus a taster's general preference (see above graph -- taster 15 had a low averarge rating, while taster 4 had a generally high averge rating).
+
+### The Data and Parameters:
+
+We let $N$ be the number of datapoints, ranging from $n_0$ to $n_N$.  $Nwine$ identifies both which wine and the tasting order (white 1-5, red 1-5).  We stored a 0/1 value for whether a given wine was preferend.
+
+The parameters we are estimating:
+- $b$: intercept of the linear effect of time/tasting order; ie, the rating before time/order effected the rating
+- $m$: slope of the linear effect of time/tasting order
+- $not\_my\_fav$: how much is a rating effected by not liking the wine color in general?
+- $personal_bias$: the variation introduced by whether a person prefers red or white 
+
+
+```{r}
+sdat <- list(
+  N = nrow(dat),
+  Npref = length(unique(dat$pref)),
+  pref = as.numeric(as.factor(dat$pref)),
+  y = dat$rating,
+  Nperson = length(unique(dat$Person)),
+  person = dat$Person,
+  Nwine = length(unique(dat$order)),
+  wine = as.numeric(dat$order),
+  Ntype = length(unique(dat$cat)),
+  type = dat$cat,
+  not_prefered = ifelse(dat$cat != dat$pref, 1, 0)
+)
+fit <- stan(data = sdat, file = "./models/wine2019.stan", chains = 4)
+```
+
+
+We have fit the data to the model, and we need to check the fit.  First, we can plot the Rhat statistic, which should be very close to 1, indicating good mixing of the Markov sampling chains in the modeling. We can also visualize the chains.
+```{r}
+stan_rhat(fit)
+traceplot(fit)
+``` 
+
+The model fits well!  This was not the case for the first several models, either due to bugs in the code, or experimenting with non-linear fits.  The model also improved dgreatly after adding the personal variation parameter.
+
+
+So what effect of preference do we see?
+
+```{r}
+plot(fit, pars="not_my_fav")
+plot(fit, pars="personal_bias")
+#stan_dens(fit, pars="not_my_fav")
+```
+
+We can see the $personal\_bias$ parameter recapitulating the bias we saw in the earlier plot showing personal preference means. This parameter can be used to correct for those personal preferences.
+
+The $not\_my\_fav$ parameter, we can see the effct of rating a non-prefered wine. This is a very small effect, with the confidence intervals including 0 in both. We may have some slight bias among white wine preferers ($not\_my\_fav[2]$).
+
+
+Finally, we can plot the modeled values over our observed values:
+
+```{r echo=FALSE}
+new_dat <- cbind(dat, summary(fit)$summary %>% as.data.frame() %>% filter(grepl("y_hat", rownames(.))) %>% rename("ymin"="2.5%", "ymax"="97.5%")%>% select(mean, ymin, ymax))
+ggplot(new_dat  %>% group_by(order) %>% mutate(meanmean=mean(mean)), aes(x=as.factor(order), y=rating, fill=category)) + geom_boxplot() + geom_point(aes(y=meanmean), color="blue", size=2) + geom_linerange(aes(ymin=ymin, ymax=ymax), color="blue")  + scale_fill_manual(values = mycolors, guide=F) + labs(title = "Comparing modeled results to observed results", subtitle="(Fitted values in blue)", y="Rating", x="Wine")+  wine_theme()
+```
+
+What we can see is that in some cases, these different effects did not change the observed results; in other cases (such as red 5 and white 5), we can see that the order of tasting potentially resulted in a lower rating than would be expected otherwise.
+
+But then again, white wine 5 *was* terrible...
+
+
+# Conclusions
+
+Lets add some names to these wines, and sort them by their cost:
+
+
+```{r}
+names <- read.csv("./data/names2019.csv")
+
+new_dat <- merge(new_dat, names, by=c("Wine", "category"))
+ggplot(new_dat  %>% group_by(order) %>% mutate(meanmean=mean(mean)), aes(x=reorder(Name, Cost), y=rating, fill=category)) + geom_boxplot() + geom_point(aes(y=meanmean), color="blue", size=2) + geom_linerange(aes(ymin=ymin, ymax=ymax), color="blue")  + scale_fill_manual(values = mycolors, guide=F) + labs(title = "Comparing modeled results to observed results", subtitle="(Fitted values in blue; sorted by increasing price)", y="Rating", x="Wine")+  wine_theme() + theme(axis.text.x = element_text(angle = 45, hjust=1)) + geom_text(aes(y=11, label=Cost), col='red') 
+```
+
+

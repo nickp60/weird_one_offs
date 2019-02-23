@@ -19,9 +19,14 @@ I was curious how many complete genomes had publicly available data associated o
 [Click here](./viruses_in_ad/viruses_in_ad.html) for a peek at the state of viral metagenome detection from anaerobic digestion:
 
 ## Cheap Wine
+### 2018
 We did a very informal blind taste test of 14 wines under 7 euro.
 
-[The analysis can be found here](./cheapwine/bbb.html)
+[The 2018 analysis can be found here](./cheapwine/bbb.html)
+
+### 2019
+We reviewed 10 wines this year:
+[The new 2019  analysis!](./cheapwine/bbb2019.html)
 
 
 ## Comparing 3 Phage Finding Tools
