@@ -12,7 +12,7 @@ data {
   int<lower=0> not_prefered[N];        // to hold 0 ir 1 if preference  matches wine type
 }
 parameters {
-  vector[Nwine] m;                    // slope - effect of wine order (or time)
+  vector[Ntype] m;                    // slope - effect of wine order (or time)
   vector[Nwine] b;                    // intercept - rating before time effect
   //vector[Ntype] not_my_fav;            // effect of whether a wine was prefered
   vector[Nperson] personal_bias;       // correction factor for a persons 
@@ -22,13 +22,13 @@ parameters {
 transformed parameters {
   vector[N] y_hat;                     // the *real* measured value, without measurement error
   for (n in 1:N) {
-    y_hat[n] = ((m[wine[n]] * wine[n]) +  b[wine[n]]) + (not_prefered[n] * not_my_fav) + personal_bias[person[n]];
+    y_hat[n] = ((m[type[n]] * wine[n]) +  b[wine[n]]) + (not_prefered[n] * not_my_fav) + personal_bias[person[n]];
   }
 }
 model {
   personal_bias ~  normal(0, 2);
   not_my_fav ~ normal(0, 1);
-  m ~ cauchy(-2, 2);
+  m ~ cauchy(-1, 1);
   b ~ cauchy(5, 1);
   y ~ normal(y_hat, sigma);               // fit with error
 }

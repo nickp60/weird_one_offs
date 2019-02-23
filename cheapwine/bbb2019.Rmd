@@ -124,13 +124,13 @@ Fom the plots above, it looks like the actual quality of the wine is affected li
 
 ### The Data and Parameters:
 
-We let $N$ be the number of datapoints, ranging from $n_0$ to $n_N$.  $Nwine$ identifies both which wine and the tasting order (white 1-5, red 1-5).  We stored a 0/1 value for whether a given wine was preferend.
+We let $N$ be the number of datapoints, ranging from $n_0 ... n_N$.  $Nwine$ identifies both which wine and the tasting order (white 1-5, red 1-5).  We stored a 0/1 value for whether a given wine was preferend.
 
 The parameters we are estimating:
 - $b$: intercept of the linear effect of time/tasting order; ie, the rating before time/order effected the rating
 - $m$: slope of the linear effect of time/tasting order
 - $not\_my\_fav$: how much is a rating effected by not liking the wine color in general?
-- $personal_bias$: the variation introduced by whether a person prefers red or white 
+- $personal\_bias$: the variation introduced by whether a person prefers red or white 
 
 
 ```{r  echo=FALSE}
@@ -160,11 +160,29 @@ traceplot(fit)
 The model fits well!  This was not the case for the first several models, either due to bugs in the code, or experimenting with non-linear fits.  The model also improved dgreatly after adding the personal variation parameter.
 
 
-So what effect of preference do we see?
+So what effect of preference do we see?  First lets look to see whether there is a fatigue affect with time, by viewing the estimates for the slope of the fit:
+```{r, echo=FALSE}
+
+plot(fit, pars="m") + labs(title="Effect of time/order", subtitle="Wine type (1= white, 2 = red)")
+
+```
+
+It looks like it, at least for white wines, there is indeed a negative trend associated with the order, potentially indicating fatigue.  Interestinly, it appears that that is not true for red wines, even though those were tasted after the white wine.
+
+How about an effect of rating non-prefered wines?  
 
 ```{r  echo=FALSE}
 plot(fit, pars="not_my_fav")
+
+```
+
+There is a slight but non-significant increase in the rating when rating non-prefered wines.  Huh.
+
+How about person to person bias?
+
+```{r echo=FALSE}
 plot(fit, pars="personal_bias")
+
 #stan_dens(fit, pars="not_my_fav")
 ```
 
